@@ -1,6 +1,25 @@
 import 'dart:io';
 import 'package:atv2/biblioteca.dart';
 
+String lerTextoNaoVazio(String prompt) {
+  while (true) {
+    stdout.write(prompt);
+    final entrada = (stdin.readLineSync() ?? '').trim();
+    if (entrada.isNotEmpty) return entrada;
+    print('  [ERRO] O campo nao pode ser vazio. Tente novamente.');
+  }
+}
+
+int lerAnoValido(String prompt) {
+  while (true) {
+    stdout.write(prompt);
+    final entrada = stdin.readLineSync() ?? '';
+    final ano = int.tryParse(entrada);
+    if (ano != null && ano > 0) return ano;
+    print('  [ERRO] Ano invalido. Digite um numero maior que zero.');
+  }
+}
+
 void main() {
   final biblioteca = Biblioteca();
 
@@ -21,16 +40,11 @@ void main() {
     switch (opcao) {
       case '1':
         print('');
-        stdout.write('  Titulo: ');
-        final titulo = stdin.readLineSync() ?? '';
-        stdout.write('  Autor: ');
-        final autor = stdin.readLineSync() ?? '';
-        stdout.write('  Ano de publicacao: ');
-        final ano = int.tryParse(stdin.readLineSync() ?? '') ?? 0;
-        stdout.write('  Editora: ');
-        final editora = stdin.readLineSync() ?? '';
-        stdout.write('  Genero: ');
-        final genero = stdin.readLineSync() ?? '';
+        final titulo = lerTextoNaoVazio('  Titulo: ');
+        final autor = lerTextoNaoVazio('  Autor: ');
+        final ano = lerAnoValido('  Ano de publicacao: ');
+        final editora = lerTextoNaoVazio('  Editora: ');
+        final genero = lerTextoNaoVazio('  Genero: ');
         biblioteca.cadastrarLivro(titulo, autor, ano, editora, genero);
         break;
       case '2':
@@ -40,16 +54,11 @@ void main() {
         print('');
         stdout.write('  ID do livro: ');
         final id = int.tryParse(stdin.readLineSync() ?? '') ?? 0;
-        stdout.write('  Novo titulo: ');
-        final novoTitulo = stdin.readLineSync() ?? '';
-        stdout.write('  Novo autor: ');
-        final novoAutor = stdin.readLineSync() ?? '';
-        stdout.write('  Novo ano de publicacao: ');
-        final novoAno = int.tryParse(stdin.readLineSync() ?? '') ?? 0;
-        stdout.write('  Nova editora: ');
-        final novaEditora = stdin.readLineSync() ?? '';
-        stdout.write('  Novo genero: ');
-        final novoGenero = stdin.readLineSync() ?? '';
+        final novoTitulo = lerTextoNaoVazio('  Novo titulo: ');
+        final novoAutor = lerTextoNaoVazio('  Novo autor: ');
+        final novoAno = lerAnoValido('  Novo ano de publicacao: ');
+        final novaEditora = lerTextoNaoVazio('  Nova editora: ');
+        final novoGenero = lerTextoNaoVazio('  Novo genero: ');
         biblioteca.atualizarLivro(
           id,
           novoTitulo,
