@@ -27,7 +27,11 @@ void main() {
         final autor = stdin.readLineSync() ?? '';
         stdout.write('  Ano de publicacao: ');
         final ano = int.tryParse(stdin.readLineSync() ?? '') ?? 0;
-        biblioteca.cadastrarLivro(titulo, autor, ano);
+        stdout.write('  Editora: ');
+        final editora = stdin.readLineSync() ?? '';
+        stdout.write('  Genero: ');
+        final genero = stdin.readLineSync() ?? '';
+        biblioteca.cadastrarLivro(titulo, autor, ano, editora, genero);
         break;
       case '2':
         biblioteca.listarLivros();
@@ -42,7 +46,18 @@ void main() {
         final novoAutor = stdin.readLineSync() ?? '';
         stdout.write('  Novo ano de publicacao: ');
         final novoAno = int.tryParse(stdin.readLineSync() ?? '') ?? 0;
-        biblioteca.atualizarLivro(id, novoTitulo, novoAutor, novoAno);
+        stdout.write('  Nova editora: ');
+        final novaEditora = stdin.readLineSync() ?? '';
+        stdout.write('  Novo genero: ');
+        final novoGenero = stdin.readLineSync() ?? '';
+        biblioteca.atualizarLivro(
+          id,
+          novoTitulo,
+          novoAutor,
+          novoAno,
+          novaEditora,
+          novoGenero,
+        );
         break;
       case '4':
         print('');
