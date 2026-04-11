@@ -2,7 +2,7 @@
 
 ## Descricao
 
-Aplicativo de lista de tarefas (To-Do List) desenvolvido em Flutter com gestao de estado utilizando Riverpod. Permite adicionar, visualizar, marcar como concluida e remover tarefas.
+Aplicativo de lista de tarefas (To-Do List) desenvolvido em Flutter com gestao de estado utilizando Riverpod. Permite adicionar, visualizar, marcar como concluida, editar e remover tarefas.
 
 ## Gestao de estado
 
@@ -12,6 +12,7 @@ A classe `TarefasNotifier` possui os metodos:
 
 - `adicionar()` - cria uma nova tarefa e adiciona ao estado
 - `alternarConclusao()` - alterna o status de conclusao de uma tarefa
+- `editar()` - atualiza o titulo de uma tarefa existente
 - `remover()` - remove uma tarefa do estado
 
 Cada vez que o estado e atualizado, os widgets que observam o provider sao reconstruidos automaticamente pelo Riverpod.
@@ -59,5 +60,6 @@ flutter run
 - Botao para adicionar tarefa (tambem funciona com Enter)
 - Lista exibindo todas as tarefas com ListView.builder
 - Checkbox para marcar tarefa como concluida (texto fica riscado e cinza)
+- Edicao inline do titulo da tarefa: o texto vira um campo editavel no proprio item, com opcao de salvar (Enter ou clique fora) ou cancelar (X)
 - Botao para remover tarefa
 - Mensagem quando nao ha tarefas cadastradas
