@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'historico_page.dart';
 import 'widgets/display_calculadora.dart';
 import 'widgets/teclado_calculadora.dart';
 
@@ -12,6 +13,7 @@ class CalculadoraPage extends StatefulWidget {
 class _CalculadoraPageState extends State<CalculadoraPage> {
   String _expressao = '';
   String _resultado = '0';
+  final List<String> _historico = [];
 
   void _onBotaoPressed(String valor) {
     setState(() {
@@ -37,11 +39,14 @@ class _CalculadoraPageState extends State<CalculadoraPage> {
   void _calcular() {
     try {
       final resultado = _avaliarExpressao(_expressao);
+      String resultadoFormatado;
       if (resultado == resultado.toInt().toDouble()) {
-        _resultado = resultado.toInt().toString();
+        resultadoFormatado = resultado.toInt().toString();
       } else {
-        _resultado = resultado.toStringAsFixed(8).replaceAll(RegExp(r'0+$'), '').replaceAll(RegExp(r'\.$'), '');
+        resultadoFormatado = resultado.toStringAsFixed(8).replaceAll(RegExp(r'0+$'), '').replaceAll(RegExp(r'\.$'), '');
       }
+      _historico.add('$_expressao = $resultadoFormatado');
+      _resultado = resultadoFormatado;
     } catch (_) {
       _resultado = 'Erro';
     }
@@ -143,6 +148,20 @@ class _CalculadoraPageState extends State<CalculadoraPage> {
         backgroundColor: Colors.black,
         foregroundColor: Colors.white,
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.history),
+            tooltip: 'Historico',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HistoricoPage(historico: _historico),
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: Column(
         children: [
