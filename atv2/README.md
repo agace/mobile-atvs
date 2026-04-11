@@ -14,6 +14,8 @@ Representa um livro com os atributos:
 - `titulo` - titulo do livro
 - `autor` - autor do livro
 - `anoPublicacao` - ano de publicacao
+- `editora` - nome da editora responsavel pela publicacao
+- `genero` - genero literario do livro
 
 Possui o metodo `exibir()` que retorna os dados formatados.
 
@@ -25,6 +27,15 @@ Gerencia a colecao de livros armazenados em uma lista. Metodos:
 - `listarLivros()` - exibe todos os livros cadastrados
 - `atualizarLivro()` - atualiza os dados de um livro pelo ID
 - `removerLivro()` - remove um livro pelo ID
+
+## Validacoes de entrada
+
+O sistema valida as entradas do usuario no cadastro e atualizacao de livros:
+
+- **Titulo, autor, editora e genero** nao podem ser vazios
+- **Ano de publicacao** precisa ser um numero inteiro maior que zero
+
+Caso qualquer entrada seja invalida, o sistema exibe uma mensagem de erro e re-pergunta o mesmo campo ate receber um valor valido.
 
 ## Como executar
 
@@ -51,6 +62,8 @@ dart run
   Titulo: O Senhor dos Aneis
   Autor: J.R.R. Tolkien
   Ano de publicacao: 1954
+  Editora: Martins Fontes
+  Genero: Fantasia
 
   [OK] Livro cadastrado com sucesso!
 ```
@@ -63,6 +76,8 @@ dart run
   Titulo: Dom Casmurro
   Autor: Machado de Assis
   Ano de publicacao: 1899
+  Editora: Garnier
+  Genero: Romance
 
   [OK] Livro cadastrado com sucesso!
 ```
@@ -75,15 +90,19 @@ dart run
   LIVROS CADASTRADOS
   ==================
 
-  ID:     1
-  Titulo: O Senhor dos Aneis
-  Autor:  J.R.R. Tolkien
-  Ano:    1954
+  ID:      1
+  Titulo:  O Senhor dos Aneis
+  Autor:   J.R.R. Tolkien
+  Ano:     1954
+  Editora: Martins Fontes
+  Genero:  Fantasia
 
-  ID:     2
-  Titulo: Dom Casmurro
-  Autor:  Machado de Assis
-  Ano:    1899
+  ID:      2
+  Titulo:  Dom Casmurro
+  Autor:   Machado de Assis
+  Ano:     1899
+  Editora: Garnier
+  Genero:  Romance
 ```
 
 ### Atualizar um livro
@@ -95,6 +114,8 @@ dart run
   Novo titulo: Dom Casmurro - Edicao Especial
   Novo autor: Machado de Assis
   Novo ano de publicacao: 1900
+  Nova editora: Companhia das Letras
+  Novo genero: Romance
 
   [OK] Livro atualizado com sucesso!
 ```
