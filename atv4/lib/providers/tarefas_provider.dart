@@ -22,6 +22,17 @@ class TarefasNotifier extends Notifier<List<Tarefa>> {
     }).toList();
   }
 
+  void editar(String id, String novoTitulo) {
+    final tituloLimpo = novoTitulo.trim();
+    if (tituloLimpo.isEmpty) return;
+    state = state.map((tarefa) {
+      if (tarefa.id == id) {
+        return tarefa.copiarCom(titulo: tituloLimpo);
+      }
+      return tarefa;
+    }).toList();
+  }
+
   void remover(String id) {
     state = state.where((tarefa) => tarefa.id != id).toList();
   }

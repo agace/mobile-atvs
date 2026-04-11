@@ -14,6 +14,57 @@ class ItemTarefa extends ConsumerStatefulWidget {
 
 class _ItemTarefaState extends ConsumerState<ItemTarefa> {
   bool _hoverLixeira = false;
+  bool _hoverEditar = false;
+  bool _hoverCancelar = false;
+  bool _editando = false;
+  bool _cancelando = false;
+  TextEditingController? _controller;
+  FocusNode? _focusNode;
+
+  void _iniciarEdicao() {
+    final tarefa = widget.tarefa;
+    _controller = TextEditingController(text: tarefa.titulo);
+    _focusNode = FocusNode();
+    setState(() => _editando = true);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _focusNode?.requestFocus();
+    });
+  }
+
+  void _salvarEdicao() {
+    if (!_editando) return;
+    if (_cancelando) {
+      _cancelando = false;
+      _encerrarEdicao();
+      return;
+    }
+    final novoTitulo = _controller?.text.trim() ?? '';
+    final tituloAtual = widget.tarefa.titulo;
+    if (novoTitulo.isNotEmpty && novoTitulo != tituloAtual) {
+      ref.read(tarefasProvider.notifier).editar(widget.tarefa.id, novoTitulo);
+    }
+    _encerrarEdicao();
+  }
+
+  void _cancelarEdicao() {
+    _cancelando = false;
+    _encerrarEdicao();
+  }
+
+  void _encerrarEdicao() {
+    _controller?.dispose();
+    _focusNode?.dispose();
+    _controller = null;
+    _focusNode = null;
+    if (mounted) setState(() => _editando = false);
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    _focusNode?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +86,11 @@ class _ItemTarefaState extends ConsumerState<ItemTarefa> {
         ),
       ),
       child: InkWell(
-        onTap: () {
-          ref.read(tarefasProvider.notifier).alternarConclusao(tarefa.id);
-        },
+        onTap: _editando
+            ? null
+            : () {
+                ref.read(tarefasProvider.notifier).alternarConclusao(tarefa.id);
+              },
         splashColor: Colors.transparent,
         highlightColor: Colors.white.withValues(alpha: 0.03),
         child: Container(
@@ -78,37 +131,94 @@ class _ItemTarefaState extends ConsumerState<ItemTarefa> {
               ),
               const SizedBox(width: 16),
               Expanded(
-                child: Text(
-                  tarefa.titulo,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: tarefa.concluida
-                        ? Colors.white.withValues(alpha: 0.2)
-                        : Colors.white.withValues(alpha: 0.85),
-                    decoration:
-                        tarefa.concluida ? TextDecoration.lineThrough : null,
-                    decorationColor: Colors.white.withValues(alpha: 0.2),
-                    letterSpacing: 0.1,
+                child: _editando
+                    ? TextField(
+                        controller: _controller,
+                        focusNode: _focusNode,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white,
+                          letterSpacing: 0.1,
+                        ),
+                        cursorColor: Colors.white,
+                        decoration: const InputDecoration(
+                          isDense: true,
+                          contentPadding: EdgeInsets.zero,
+                          border: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                        ),
+                        onSubmitted: (_) => _salvarEdicao(),
+                        onTapOutside: (_) => _salvarEdicao(),
+                      )
+                    : Text(
+                        tarefa.titulo,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: tarefa.concluida
+                              ? Colors.white.withValues(alpha: 0.2)
+                              : Colors.white.withValues(alpha: 0.85),
+                          decoration: tarefa.concluida
+                              ? TextDecoration.lineThrough
+                              : null,
+                          decorationColor: Colors.white.withValues(alpha: 0.2),
+                          letterSpacing: 0.1,
+                        ),
+                      ),
+              ),
+              if (_editando)
+                MouseRegion(
+                  onEnter: (_) => setState(() => _hoverCancelar = true),
+                  onExit: (_) => setState(() => _hoverCancelar = false),
+                  child: Listener(
+                    onPointerDown: (_) => _cancelando = true,
+                    child: GestureDetector(
+                      onTap: _cancelarEdicao,
+                      child: Icon(
+                        Icons.close,
+                        size: 16,
+                        color: _hoverCancelar
+                            ? Colors.white.withValues(alpha: 0.7)
+                            : Colors.white.withValues(alpha: 0.15),
+                      ),
+                    ),
+                  ),
+                )
+              else ...[
+                MouseRegion(
+                  onEnter: (_) => setState(() => _hoverEditar = true),
+                  onExit: (_) => setState(() => _hoverEditar = false),
+                  child: GestureDetector(
+                    onTap: _iniciarEdicao,
+                    child: Icon(
+                      Icons.edit_outlined,
+                      size: 16,
+                      color: _hoverEditar
+                          ? Colors.white.withValues(alpha: 0.7)
+                          : Colors.white.withValues(alpha: 0.15),
+                    ),
                   ),
                 ),
-              ),
-              MouseRegion(
-                onEnter: (_) => setState(() => _hoverLixeira = true),
-                onExit: (_) => setState(() => _hoverLixeira = false),
-                child: GestureDetector(
-                  onTap: () {
-                    ref.read(tarefasProvider.notifier).remover(tarefa.id);
-                  },
-                  child: Icon(
-                    Icons.delete_outline,
-                    size: 16,
-                    color: _hoverLixeira
-                        ? Colors.red.shade400
-                        : Colors.white.withValues(alpha: 0.15),
+                const SizedBox(width: 16),
+                MouseRegion(
+                  onEnter: (_) => setState(() => _hoverLixeira = true),
+                  onExit: (_) => setState(() => _hoverLixeira = false),
+                  child: GestureDetector(
+                    onTap: () {
+                      ref.read(tarefasProvider.notifier).remover(tarefa.id);
+                    },
+                    child: Icon(
+                      Icons.delete_outline,
+                      size: 16,
+                      color: _hoverLixeira
+                          ? Colors.red.shade400
+                          : Colors.white.withValues(alpha: 0.15),
+                    ),
                   ),
                 ),
-              ),
+              ],
             ],
           ),
         ),
