@@ -2,7 +2,7 @@
 
 ## Estudante
 
-- Nome: Guilherme Eidam
+- Nome: Bryan Charles - ESOFT7S
 - GitHub: agace
 
 ## Objetivo
