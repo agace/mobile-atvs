@@ -51,6 +51,10 @@ flutter pub get
 flutter run
 ```
 
+## Demonstracao
+
+![Calculadora](screenshots/calculadora.gif)
+
 ## Funcionalidades
 
 - Numeros de 0 a 9 e ponto decimal

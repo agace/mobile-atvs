@@ -54,6 +54,10 @@ flutter pub get
 flutter run
 ```
 
+## Demonstracao
+
+![Lista de Tarefas](screenshots/tarefa.gif)
+
 ## Funcionalidades
 
 - Campo de texto para inserir nova tarefa
