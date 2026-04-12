@@ -15,9 +15,9 @@ class ItemTarefa extends ConsumerStatefulWidget {
 class _ItemTarefaState extends ConsumerState<ItemTarefa> {
   bool _hoverLixeira = false;
   bool _hoverEditar = false;
+  bool _hoverSalvar = false;
   bool _hoverCancelar = false;
   bool _editando = false;
-  bool _cancelando = false;
   TextEditingController? _controller;
   FocusNode? _focusNode;
 
@@ -33,11 +33,6 @@ class _ItemTarefaState extends ConsumerState<ItemTarefa> {
 
   void _salvarEdicao() {
     if (!_editando) return;
-    if (_cancelando) {
-      _cancelando = false;
-      _encerrarEdicao();
-      return;
-    }
     final novoTitulo = _controller?.text.trim() ?? '';
     final tituloAtual = widget.tarefa.titulo;
     if (novoTitulo.isNotEmpty && novoTitulo != tituloAtual) {
@@ -47,7 +42,6 @@ class _ItemTarefaState extends ConsumerState<ItemTarefa> {
   }
 
   void _cancelarEdicao() {
-    _cancelando = false;
     _encerrarEdicao();
   }
 
@@ -150,7 +144,6 @@ class _ItemTarefaState extends ConsumerState<ItemTarefa> {
                           focusedBorder: InputBorder.none,
                         ),
                         onSubmitted: (_) => _salvarEdicao(),
-                        onTapOutside: (_) => _salvarEdicao(),
                       )
                     : Text(
                         tarefa.titulo,
@@ -168,25 +161,37 @@ class _ItemTarefaState extends ConsumerState<ItemTarefa> {
                         ),
                       ),
               ),
-              if (_editando)
+              if (_editando) ...[
+                MouseRegion(
+                  onEnter: (_) => setState(() => _hoverSalvar = true),
+                  onExit: (_) => setState(() => _hoverSalvar = false),
+                  child: GestureDetector(
+                    onTap: _salvarEdicao,
+                    child: Icon(
+                      Icons.check,
+                      size: 16,
+                      color: _hoverSalvar
+                          ? Colors.white.withValues(alpha: 0.7)
+                          : Colors.white.withValues(alpha: 0.15),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 16),
                 MouseRegion(
                   onEnter: (_) => setState(() => _hoverCancelar = true),
                   onExit: (_) => setState(() => _hoverCancelar = false),
-                  child: Listener(
-                    onPointerDown: (_) => _cancelando = true,
-                    child: GestureDetector(
-                      onTap: _cancelarEdicao,
-                      child: Icon(
-                        Icons.close,
-                        size: 16,
-                        color: _hoverCancelar
-                            ? Colors.white.withValues(alpha: 0.7)
-                            : Colors.white.withValues(alpha: 0.15),
-                      ),
+                  child: GestureDetector(
+                    onTap: _cancelarEdicao,
+                    child: Icon(
+                      Icons.close,
+                      size: 16,
+                      color: _hoverCancelar
+                          ? Colors.red.shade400
+                          : Colors.white.withValues(alpha: 0.15),
                     ),
                   ),
-                )
-              else ...[
+                ),
+              ] else ...[
                 MouseRegion(
                   onEnter: (_) => setState(() => _hoverEditar = true),
                   onExit: (_) => setState(() => _hoverEditar = false),
