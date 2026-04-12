@@ -2,7 +2,7 @@
 
 ## Estudante
 
-- Nome: Bryan Charles
+- Nome: Guilherme Eidam
 - GitHub: agace
 
 ## Objetivo
