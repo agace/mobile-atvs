@@ -2,6 +2,12 @@
 
 ![Dart](https://img.shields.io/badge/Dart-0175C2?style=flat&logo=dart&logoColor=white) ![Flutter](https://img.shields.io/badge/Flutter-02569B?style=flat&logo=flutter&logoColor=white) ![Riverpod](https://img.shields.io/badge/Riverpod-2.x-7C4DFF?style=flat)
 
+<div align="center">
+
+[Assistir apresentação no YouTube](https://www.youtube.com/watch?v=VjUld1umpbE)
+
+</div>
+
 Repositório com as atividades da disciplina **Programação para Dispositivos Móveis**, desenvolvidas em **Dart** e **Flutter**.
 
 ## Sumário
