@@ -109,7 +109,39 @@ class TelaPrincipalMovieApp extends StatelessWidget {
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
-            Expanded(flex: 4, child: FilmesListView(filmes: filmes)),
+            Expanded(
+              flex: 4,
+              child: FilmesListView(
+                filmes: filmes,
+                onFilmeTap: (FilmeItem filme) =>
+                    _mostrarFeedback(context, filme),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Desafio 2: feedback visual na tela principal via SnackBar.
+  void _mostrarFeedback(BuildContext context, FilmeItem filme) {
+    final ScaffoldMessengerState messenger = ScaffoldMessenger.of(context);
+    messenger.hideCurrentSnackBar();
+    messenger.showSnackBar(
+      SnackBar(
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 2),
+        content: Row(
+          children: <Widget>[
+            const Icon(Icons.movie_filter_rounded, color: Colors.white),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                'Selecionado: ${filme.titulo}',
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
           ],
         ),
       ),
