@@ -21,21 +21,32 @@ Repositório com as atividades da disciplina **Programação para Dispositivos M
 
 ## Projetos
 
+### 1º Bimestre
+
 | # | Nome | Tecnologia | Conceitos demonstrados |
 |---|------|------------|------------------------|
-| 1 | [Hello World](./atv1) | Dart | Configuração do ambiente Dart, primeiro programa, versionamento com Git |
-| 2 | [CRUD Biblioteca](./atv2) | Dart | Programação Orientada a Objetos, classes e atributos, manipulação de listas, entrada/saída via terminal |
-| 3 | [Calculadora](./atv3) | Flutter | Widgets com estado (StatefulWidget), componentização e reuso, parser de expressões com precedência e parênteses |
-| 4 | [Lista de Tarefas](./atv4) | Flutter + Riverpod | Gestão de estado reativa com Notifier, separação em camadas (models, providers, widgets), UI reativa automática |
+| 1 | [Hello World](./1BIM/atv1) | Dart | Configuração do ambiente Dart, primeiro programa, versionamento com Git |
+| 2 | [CRUD Biblioteca](./1BIM/atv2) | Dart | Programação Orientada a Objetos, classes e atributos, manipulação de listas, entrada/saída via terminal |
+| 3 | [Calculadora](./1BIM/atv3) | Flutter | Widgets com estado (StatefulWidget), componentização e reuso, parser de expressões com precedência e parênteses |
+| 4 | [Lista de Tarefas](./1BIM/atv4) | Flutter + Riverpod | Gestão de estado reativa com Notifier, separação em camadas (models, providers, widgets), UI reativa automática |
+
+### 2º Bimestre
+
+| # | Nome | Tecnologia | Conceitos demonstrados |
+|---|------|------------|------------------------|
+| 1 | [Movie App – Desafios](./2BIM/atv1) | Flutter | Renderização sob demanda com `ListView.builder`, interação com toque (`InkWell` + `onTap`) e feedback visual com `SnackBar` |
 
 ## Estrutura do repositório
 
 ```
-mobile-atvs/
-├── atv1/       # Hello World em Dart
-├── atv2/       # CRUD de Biblioteca em Dart
-├── atv3/       # Calculadora em Flutter
-└── atv4/       # Lista de Tarefas em Flutter com Riverpod
+atvs/
+├── 1BIM/
+│   ├── atv1/   # Hello World em Dart
+│   ├── atv2/   # CRUD de Biblioteca em Dart
+│   ├── atv3/   # Calculadora em Flutter
+│   └── atv4/   # Lista de Tarefas em Flutter com Riverpod
+└── 2BIM/
+    └── atv1/   # Movie App – Desafios 1 e 2 (Flutter)
 ```
 
 Cada pasta contém um `README.md` próprio com detalhes do projeto correspondente.
@@ -50,25 +61,25 @@ Cada pasta contém um `README.md` próprio com detalhes do projeto correspondent
 
 ### Pré-requisitos
 
-- [Dart SDK](https://dart.dev/get-dart) instalado (para atv1 e atv2)
-- [Flutter SDK](https://docs.flutter.dev/get-started/install) instalado (para atv3 e atv4)
+- [Dart SDK](https://dart.dev/get-dart) instalado (para 1BIM/atv1 e 1BIM/atv2)
+- [Flutter SDK](https://docs.flutter.dev/get-started/install) instalado (para projetos Flutter)
 - Verifique sua instalação Flutter com:
 
 ```bash
 flutter doctor
 ```
 
-### Atividades em Dart (atv1, atv2)
+### Atividades em Dart (1BIM/atv1, 1BIM/atv2)
 
 ```bash
-cd atv1  # ou atv2
+cd 1BIM/atv1  # ou 1BIM/atv2
 dart run
 ```
 
-### Atividades em Flutter (atv3, atv4)
+### Atividades em Flutter (1BIM/atv3, 1BIM/atv4, 2BIM/atv1)
 
 ```bash
-cd atv3  # ou atv4
+cd 1BIM/atv3  # ou 1BIM/atv4, 2BIM/atv1
 flutter pub get
 flutter run
 ```

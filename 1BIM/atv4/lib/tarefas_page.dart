@@ -39,7 +39,7 @@ class TarefasPage extends ConsumerWidget {
                       '$concluidas/${tarefas.length}',
                       style: TextStyle(
                         color: Colors.white.withValues(alpha: 0.3),
-                        fontSize: 14,
+                        fontSize: 20,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
