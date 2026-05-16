@@ -1,0 +1,135 @@
+import 'package:collection/collection.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:filmes/dados/modelos/genero.dart';
+
+import 'package:filmes/ui/tema/tema.dart';
+import 'package:filmes/utilitarios/utilitarios.dart';
+
+class GenreState {
+  final Genero genre;
+  final bool isSelected;
+
+  GenreState({required this.genre, required this.isSelected});
+}
+
+typedef OnGenresSelected = void Function(List<GenreState>);
+typedef OnGenresExpanded = void Function(bool);
+
+class SecaoGeneros extends ConsumerStatefulWidget {
+  final bool isExpanded;
+  final List<GenreState> genreStates;
+  final OnGenresExpanded onGenresExpanded;
+  final OnGenresSelected onGenresSelected;
+
+  const SecaoGeneros(
+      {required this.genreStates,
+      required this.isExpanded,
+      required this.onGenresExpanded,
+      required this.onGenresSelected,
+      super.key});
+
+  @override
+  ConsumerState<SecaoGeneros> createState() => _GenreSectionState();
+}
+
+class _GenreSectionState extends ConsumerState<SecaoGeneros> {
+  List<Widget> chips = [];
+
+  @override
+  Widget build(BuildContext context) {
+    if (chips.isEmpty) {
+      chips = getGenreChips();
+    }
+    return SliverList(
+        delegate: SliverChildListDelegate([
+      ExpansionPanelList(
+        expandIconColor: Colors.white,
+        expansionCallback: (int index, bool expanded) {
+          setState(() {
+            widget.onGenresExpanded(expanded);
+          });
+        },
+        children: [
+          ExpansionPanel(
+            isExpanded: widget.isExpanded,
+            backgroundColor: fundoTela,
+            headerBuilder: (BuildContext context, bool isExpanded) {
+              return Padding(
+                padding: const EdgeInsets.only(left: 16.0, top: 16),
+                child: Row(
+                  children: [
+                    Text('Generos',
+                        style: Theme.of(context).textTheme.headlineLarge),
+                    addHorizontalSpace(8),
+                    Container(
+                      width: 16,
+                      height: 16,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.red,
+                      ),
+                      child: Center(
+                        child: Text(
+                          totalSelected().toString(),
+                          style: verySmallText,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              );
+            },
+            body: Padding(
+              padding: const EdgeInsets.only(left: 16.0, right: 16),
+              child: GridView.builder(
+                shrinkWrap: true,
+                padding: const EdgeInsets.all(0.0),
+                itemCount: chips.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 0,
+                    childAspectRatio: 2.2,
+                    mainAxisSpacing: 0),
+                itemBuilder: (BuildContext context, int index) {
+                  return chips[index];
+                },
+              ),
+            ),
+          )
+        ],
+      )
+    ]));
+  }
+
+  List<Widget> getGenreChips() {
+    return widget.genreStates.mapIndexed((index, element) {
+      final genre = widget.genreStates[index].genre;
+      return FilterChip(
+        backgroundColor: fundoBarraBusca,
+        selectedColor: cinzaBotao,
+        label: Text(genre.name,
+            style: Theme.of(context).textTheme.labelSmall),
+        selected: widget.genreStates[index].isSelected,
+        onSelected: (selected) {
+          setState(
+            () {
+              widget.genreStates[index] = GenreState(
+                  genre: genre,
+                  isSelected: !widget.genreStates[index].isSelected);
+              widget.onGenresSelected(getSelectedGenres());
+            },
+          );
+        },
+      );
+    }).toList();
+  }
+
+  List<GenreState> getSelectedGenres() {
+    return widget.genreStates.where((e) => e.isSelected).toList();
+  }
+
+  int totalSelected() {
+    return getSelectedGenres().length;
+  }
+}
