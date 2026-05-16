@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
 
-import 'telas/tela_inicio.dart';
+import 'roteador/rotas_app.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(MainApp());
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  MainApp({super.key});
+
+  final RoteadorApp _roteador = RoteadorApp();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Catalogo de Filmes',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF1F6FEB)),
         useMaterial3: true,
       ),
-      home: const TelaInicio(),
+      routerConfig: _roteador.config(),
     );
   }
 }
