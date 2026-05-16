@@ -66,8 +66,8 @@ lib/
 - Tela de detalhes com elenco, sinopse e trailer.
 - Listagem de favoritos.
 
-## Integrantes
+## Equipe
 
-- Bryan Charles
-- Guilherme Sartori
-- Guilherme Eidam
+- [Bryan Charles](https://github.com/agace)
+- [Guilherme Sartori](https://github.com/Sartas12)
+- [Guilherme Eidam](https://github.com/JaaPaah)

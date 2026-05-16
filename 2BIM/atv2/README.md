@@ -53,8 +53,8 @@ dart run build_runner build --delete-conflicting-outputs
 flutter run -d <chrome|macos|android|ios>
 ```
 
-## Integrantes
+## Equipe
 
-- Bryan Charles
-- Guilherme Sartori
-- Guilherme Eidam
+- [Bryan Charles](https://github.com/agace)
+- [Guilherme Sartori](https://github.com/Sartas12)
+- [Guilherme Eidam](https://github.com/JaaPaah)
