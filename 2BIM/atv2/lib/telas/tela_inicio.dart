@@ -6,9 +6,9 @@ import 'package:flutter/services.dart';
 
 import '../models/filme_item.dart';
 import '../models/tema_item.dart';
+import '../roteador/rotas_app.gr.dart';
 import '../widgets/filmes_listview.dart';
 import '../widgets/temas_gridview.dart';
-import 'tela_detalhes_filme.dart';
 
 const List<TemaItem> _temas = <TemaItem>[
   TemaItem(
@@ -105,14 +105,8 @@ class _TelaInicioState extends State<TelaInicio> {
                   flex: 4,
                   child: FilmesListView(
                     filmes: filmes,
-                    onTap: (filme) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => TelaDetalhesFilme(filme: filme),
-                        ),
-                      );
-                    },
+                    onTap: (filme) =>
+                        context.router.push(TelaDetalhesFilmeRoute(filme: filme)),
                   ),
                 ),
               ],
