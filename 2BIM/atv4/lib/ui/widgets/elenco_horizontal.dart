@@ -1,0 +1,29 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:filmes/dados/modelos/creditos_filme.dart';
+
+import 'package:filmes/ui/widgets/imagem_elenco.dart';
+import 'package:filmes/utilitarios/utilitarios.dart';
+
+class HorizontalCast extends ConsumerWidget {
+  final List<ElencoFilme> castList;
+
+  const HorizontalCast({required this.castList, super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return SliverPadding(
+      padding: const EdgeInsets.only(left: 16.0, right: 16),
+      sliver: SliverGrid(
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 100.0,
+            mainAxisSpacing: 16,
+            crossAxisSpacing: 16,
+            mainAxisExtent: 100.0),
+        delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+          return ImagemElenco(imageUrl: getImageUrl(ImageSize.small, castList[index].profilePath), name: castList[index].name);
+        }, childCount: castList.length),
+      ),
+    );
+  }
+}

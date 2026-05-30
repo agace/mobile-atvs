@@ -1,0 +1,77 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:filmes/dados/modelos/filme.dart';
+import 'package:filmes/provedores.dart';
+import 'package:filmes/utilitarios/utilitarios.dart';
+
+class LinhaFilme extends ConsumerWidget {
+  final Filme movie;
+  final OnMovieTap onMovieTap;
+  const LinhaFilme({required this.movie, required this.onMovieTap, super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    String uniqueHeroTag = '${movie.image}LinhaFilme';
+    if (movie.image.isNotEmpty) {
+      return GestureDetector(
+        onTap: () {
+          ref.read(tagHeroProvider.notifier).state = uniqueHeroTag;
+          onMovieTap(movie.movieId);
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SizedBox(
+            height: 140,
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                addHorizontalSpace(16),
+                SizedBox(
+                  height: 142,
+                  width: 100,
+                  child: Hero(
+                    tag: uniqueHeroTag,
+                    child: CachedNetworkImage(
+                      imageUrl: movie.image,
+                      alignment: Alignment.topCenter,
+                      fit: BoxFit.cover,
+                      height: 142,
+                      width: 100,
+                    ),
+                  ),
+                ),
+                addHorizontalSpace(16),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Spacer(),
+                    AutoSizeText(
+                      movie.title,
+                      maxLines: 1,
+                      minFontSize: 10,
+                      style: Theme.of(context).textTheme.labelLarge,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    addVerticalSpace(4),
+                    Text(
+                      yearFormat.format(movie.releaseDate),
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    addVerticalSpace(4),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    } else {
+      return Container();
+    }
+  }
+}
