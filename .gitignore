@@ -1,2 +1,5 @@
 # macOS
 .DS_Store
+
+# Script local de deploy (uso pessoal)
+2BIM/atv4/deploy_iphone.sh
