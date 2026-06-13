@@ -10,6 +10,7 @@ Atividades avaliativas do 2º bimestre da disciplina **Programação para Dispos
 | 2 | [Movie App – Navegação](./atv2) | Flutter | Refatoração da navegação para `context.router.push` |
 | 3 | [Movie App – TMDB](./atv3) | Flutter | Integração com a API real do The Movie Database |
 | 4 | [Movie App – Armazenamento Local](./atv4) | Flutter | SharedPreferences (tema, busca, ordenação) e SQLite/Drift (favoritos) |
+| 5 | [Loja Flutter – Projeto Final](./proj_final) | Flutter | E-commerce com Clean Architecture: Riverpod, GoRouter, Dio, SharedPreferences, SQLite/Drift e testes (unitários, widget e integração) |
 
 ## Equipe
 
